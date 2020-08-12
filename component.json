@@ -1,7 +1,7 @@
 {
-    "name": "resumable.js",
-    "repo": "23/resumable.js",
-    "version": "1.1.2",
+    "name": "resumable.js-2",
+    "repo": "LukeMadhanga/resumable.js-2",
+    "version": "1.2.0",
     "main": "resumable.js",
     "scripts": ["resumable.js"]
 }
