@@ -116,7 +116,7 @@
       }
     };
     $.indexOf = function(array, obj) {
-    	if (array.indexOf) { return array.indexOf(obj); }     
+    	if (array.indexOf) { return array.indexOf(obj); }
     	for (var i = 0; i < array.length; i++) {
             if (array[i] === obj) { return i; }
         }
@@ -489,23 +489,26 @@
       var _error = uniqueIdentifier !== undefined;
 
       // Callback when something happens within the chunk
-      var chunkEvent = function(event, message){
+      var chunkEvent = function(event, argument){
         // event can be 'progress', 'success', 'error' or 'retry'
         switch(event){
         case 'progress':
-          $.resumableObj.fire('fileProgress', $, message);
+          $.resumableObj.fire('fileProgress', $, argument);
+          break;
+        case 'xhrProgress':
+          $.resumableObj.fire('xhrProgress', $, argument);
           break;
         case 'error':
           $.abort();
           _error = true;
           $.chunks = [];
-          $.resumableObj.fire('fileError', $, message);
+          $.resumableObj.fire('fileError', $, argument);
           break;
         case 'success':
           if(_error) return;
-          $.resumableObj.fire('fileProgress', $, message); // it's at least progress
+          $.resumableObj.fire('fileProgress', $, argument); // it's at least progress
           if($.isComplete()) {
-            $.resumableObj.fire('fileSuccess', $, message);
+            $.resumableObj.fire('fileSuccess', $, argument);
           }
           break;
         case 'retry':
@@ -694,7 +697,7 @@
           $.tested = true;
           var status = $.status();
           if(status=='success') {
-            $.callback(status, $.message());
+            $.callback(status, $.message(), $);
             $.resumableObj.uploadNextChunk();
           } else {
             $.send();
@@ -779,23 +782,22 @@
         // Progress
         $.xhr.upload.addEventListener('progress', function(e){
           if( (new Date) - $.lastProgressCallback > $.getOpt('throttleProgressCallbacks') * 1000 ) {
-            $.callback('progress');
+            $.callback('xhrProgress', e, $);
             $.lastProgressCallback = (new Date);
           }
           $.loaded=e.loaded||0;
         }, false);
         $.loaded = 0;
         $.pendingRetry = false;
-        $.callback('progress');
 
         // Done (either done, failed or retry)
         var doneHandler = function(e){
           var status = $.status();
           if(status=='success'||status=='error') {
-            $.callback(status, $.message());
+            $.callback(status, $.message(), $);
             $.resumableObj.uploadNextChunk();
           } else {
-            $.callback('retry', $.message());
+            $.callback('retry', $.message(), $);
             $.abort();
             $.retries++;
             var retryInterval = $.getOpt('chunkRetryInterval');

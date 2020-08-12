@@ -40,13 +40,14 @@ After this, interaction with Resumable.js is done by listening to events:
 ```js
 r.on('fileAdded', function(file, event){
     ...
-  });
+});
+
 r.on('fileSuccess', function(file, message){
     ...
-  });
+});
 r.on('fileError', function(file, message){
     ...
-  });
+});
 ```
 
 ## How do I set it up with my server?
@@ -163,7 +164,8 @@ adding the file. (Default: `null`)
 #### Events
 
 * `.fileSuccess(file, message)` A specific file was completed. `message` is the response body from the server.
-* `.fileProgress(file, message)` Uploading progressed for a specific file.
+* `.fileProgress(file, message, ResumableChunk)` Uploading progressed for a specific file.
+* `.xhrProgress(file, Event, ResumableChunk)` XHR.progress event called for a particular file.
 * `.fileAdded(file, event)` A new file was added. Optionally, you can use the browser `event` object from when the file was added.
 * `.filesAdded(arrayAdded, arraySkipped)` New files were added (and maybe some have been skipped).
 * `.fileRetry(file)` Something went wrong during upload of a specific file, uploading is being retried.
