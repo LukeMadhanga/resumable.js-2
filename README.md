@@ -1,3 +1,7 @@
+# FORKED
+This was originally forked from 23/resumable.js, however, it now seems unmaintained. Feel free to put your pull requests here, and I'll merge them in.
+
+
 ## What is Resumable.js
 
 Resumable.js is a JavaScript library providing multiple simultaneous, stable and resumable uploads via the [`HTML5 File API`](http://www.w3.org/TR/FileAPI/).
