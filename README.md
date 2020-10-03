@@ -213,4 +213,4 @@ If your aim is just to support progress indications during upload/uploading mult
 
 ## Change Log
 
-* `v1.2.1` If for example chunk 10 fails, there's no need to check chunk 11. We now stop testing after the first failed chunk to lower strain on the upload server
+* `v1.2.2` If for example chunk 10 fails, there's no need to check chunk 11. We now stop testing after the first failed chunk to lower strain on the upload server
