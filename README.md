@@ -209,3 +209,8 @@ adding the file. (Default: `null`)
 This library is explicitly designed for modern browsers supporting advanced HTML5 file features, and the motivation has been to provide stable and resumable support for large files (allowing uploads of several GB files through HTTP in a predictable fashion).
 
 If your aim is just to support progress indications during upload/uploading multiple files at once, Resumable.js isn't for you. In those cases, something like [Plupload](http://plupload.com/) provides the same features with wider browser support.
+
+
+## Change Log
+
+* `v1.2.1` If for example chunk 10 fails, there's no need to check chunk 11. We now stop testing after the first failed chunk to lower strain on the upload server
