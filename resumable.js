@@ -700,6 +700,12 @@
             $.callback(status, $.message(), $);
             $.resumableObj.uploadNextChunk();
           } else {
+
+            // All of the files from here on in do not need testing
+            $h.each($.fileObj.chunks, function (chunk) {
+                chunk.tested = true;
+            });
+
             $.send();
           }
         };
