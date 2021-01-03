@@ -79,15 +79,15 @@
       },
       minFileSize:1,
       minFileSizeErrorCallback:function(file, errorCount) {
-        alert(file.fileName||file.name +' is too small, please upload files larger than ' + $h.formatSize($.getOpt('minFileSize')) + '.');
+        alert(normalizeFileName(file.fileName||file.name) +' is too small, please upload files larger than ' + $h.formatSize($.getOpt('minFileSize')) + '.');
       },
       maxFileSize:undefined,
       maxFileSizeErrorCallback:function(file, errorCount) {
-        alert(file.fileName||file.name +' is too large, please upload files less than ' + $h.formatSize($.getOpt('maxFileSize')) + '.');
+        alert(normalizeFileName(file.fileName||file.name) +' is too large, please upload files less than ' + $h.formatSize($.getOpt('maxFileSize')) + '.');
       },
       fileType: [],
       fileTypeErrorCallback: function(file, errorCount) {
-        alert(file.fileName||file.name +' has type not allowed, please upload files of type ' + $.getOpt('fileType') + '.');
+        alert(normalizeFileName(file.fileName||file.name) +' has type not allowed, please upload files of type ' + $.getOpt('fileType') + '.');
       }
     };
     $.opts = opts||{};
@@ -396,7 +396,7 @@
         }
       };
       $h.each(fileList, function(file){
-        var fileName = file.name;
+        var fileName = normalizeFileName(file.name);
         var fileType = file.type; // e.g video/mp4
         if(o.fileType.length > 0){
           var fileTypeFound = false;
@@ -471,6 +471,16 @@
       });
     };
 
+    function normalizeFileName(name) {
+        try {
+            // Convert filename to ascii
+            return name.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        } catch (e) {
+            // As a fallback, remove all non-ascii characters
+            return name.replace(/[^\x00-\x7F]/, '');
+        }
+    }
+
     // INTERNAL OBJECT TYPES
     function ResumableFile(resumableObj, file, uniqueIdentifier){
       var $ = this;
@@ -479,7 +489,7 @@
       $._prevProgress = 0;
       $.resumableObj = resumableObj;
       $.file = file;
-      $.fileName = file.fileName||file.name; // Some confusion in different versions of Firefox
+      $.fileName = normalizeFileName(file.fileName||file.name); // Some confusion in different versions of Firefox
       $.size = file.size;
       $.relativePath = file.relativePath || file.webkitRelativePath || $.fileName;
       $.uniqueIdentifier = uniqueIdentifier;
