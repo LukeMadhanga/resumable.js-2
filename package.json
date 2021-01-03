@@ -1,6 +1,6 @@
 {
   "name": "@lukemadhanga/resumablejs-2",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "A JavaScript library for providing multiple simultaneous, stable, fault-tolerant and resumable/restartable uploads via the HTML5 File API.",
   "main": "resumable.js",
   "types": "./resumable.d.ts",

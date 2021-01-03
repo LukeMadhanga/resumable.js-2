@@ -477,7 +477,7 @@
             name = name.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
         } catch (e) {}
 
-        return name.replace(/[^\x00-\x7F]/, '');
+        return name.replace(/[^\x00-\x7F]/g, '');
     }
 
     // INTERNAL OBJECT TYPES
