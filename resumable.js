@@ -474,11 +474,10 @@
     function normalizeFileName(name) {
         try {
             // Convert filename to ascii
-            return name.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-        } catch (e) {
-            // As a fallback, remove all non-ascii characters
-            return name.replace(/[^\x00-\x7F]/, '');
-        }
+            name = name.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        } catch (e) {}
+
+        return name.replace(/[^\x00-\x7F]/, '');
     }
 
     // INTERNAL OBJECT TYPES
