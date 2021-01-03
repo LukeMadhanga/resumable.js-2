@@ -472,12 +472,36 @@
     };
 
     function normalizeFileName(name) {
-        try {
-            // Convert filename to ascii
-            name = name.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-        } catch (e) {}
+        var winReserved = [
+          'CON',
+          'PRN',
+          'AUX',
+          'NUL',
+          'COM1',
+          'COM2',
+          'COM3',
+          'COM4',
+          'COM5',
+          'COM6',
+          'COM7',
+          'COM8',
+          'COM9',
+          'LPT1',
+          'LPT2',
+          'LPT3',
+          'LPT4',
+          'LPT5',
+          'LPT6',
+          'LPT7',
+          'LPT8',
+          'LPT9'
+        ];
 
-        return name.replace(/[^\x00-\x7F]/g, '');
+        if (winReserved.indexOf(name) > -1) {
+            name = '_' + name;
+        }
+
+        return name.replace(/[\/<>:"”|?*\\]/g, '');
     }
 
     // INTERNAL OBJECT TYPES
